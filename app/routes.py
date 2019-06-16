@@ -24,3 +24,27 @@ def forgot_password_request():
     return render_template('forgot_password.html', form=form_forgot_password, title="Reset_Password_Request")
 
 
+
+@App.route('/dashboard')
+def dashboard():
+    actives = [1, 0, 0, 0]
+    return render_template('dashboard.html', actives=actives)
+
+
+@App.route('/dht11')
+def dht11():
+    actives = [0, 1, 0, 0] # dasboard, dht11, gaz
+    return render_template('dht11.html', actives=actives)
+
+
+@App.route('/humidity')
+def humidity():
+    actives = [0, 0, 1, 0]
+    return render_template('humidity.html', actives=actives, title="Gaz")
+
+
+@App.route('/gaz')
+def gaz():
+    actives = [0, 0, 0, 1]
+    return render_template('gaz.html', actives=actives, title="Gaz")
+
