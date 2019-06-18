@@ -8,10 +8,10 @@
         <div class="container-fluid">
             <div class="navbar-header">
 
-                <a class="navbar-brand" href="#">MyBlog</a>
+                <a class="navbar-brand" href="#"> ^^ My IoT Platform ^^ </a>
                  {% if actives[1] or actives[2] or actives[3] %}
                 <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-                <i class="fas fa-bars"></i>
+                <i class=" fa fa-window-maximize"></i>
 
                 </button>
                 {% endif %}
@@ -27,14 +27,14 @@
        <li class="nav-item active dropdown">   <!-- 'active' alume itme -->
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-user"></i>
-          <span>Ahmedodsfde</span>
+          <span>{{ current_user.firstname }} {{current_user.lastname }} </span>
         </a>
 
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
           <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Activity Log</a>
+          <a class="dropdown-item" href="#">Edit Profile</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{ url_for('login') }}">Logout</a>
+          <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
         </div>
 
       </li>
@@ -105,10 +105,20 @@
           <span> Gaz </span></a>
        </li>
 
+
+        {% if current_user.email == admin_email %}
+
+         <li class="nav-item active">
+         <a class="nav-link" href="{{ url_for('users_edit') }}">
+          <i class="fa fa-exclamation-triangle"></i>
+          <span> Edit & View Users </span></a>
+        {% endif %}
+         </li>
     </ul>
 
 
   {%  block content_dashboards %}
+
    </div>
   {% endblock %}
 
