@@ -34,8 +34,20 @@
 <body class="bg-light">   <!-- backgournd color -->
 
 
+ <
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+
 
  {% block content %} {% endblock %}
+
+
 
 
   <!-- Bootstrap core JavaScript-->
@@ -49,10 +61,8 @@
   <!-- Custom scripts for all pages-->
   <script src="../static/js/sb-admin.min.js"></script>
 
-  <!-- Demo scripts for this page-->
-  <script src="../static/js/demo/chart-area-demo.js"></script>
-  <script src="../static/js/demo/chart-bar-demo.js"></script>
-  <script src="../static/js/demo/chart-pie-demo.js"></script>
+  <!-- Demo scripts for this page
+  <script src="../static/js/demo/chart-area-demo.js"></script> -->
 
 
 </body>

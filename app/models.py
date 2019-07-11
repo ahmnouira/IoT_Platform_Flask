@@ -56,7 +56,8 @@ class Dht11(db.Model):
     temperature = db.Column(db.String(48), index=True)
     humidity = db.Column(db.String(48), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
+    def __repr__(self):
+        return '<temp:{0}, humidity:{1}'.format(self.temperature, self.humidity)
 
 class Gaz(db.Model):
     __tablename__ = 'gaz'

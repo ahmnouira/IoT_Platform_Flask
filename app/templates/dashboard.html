@@ -17,7 +17,7 @@
     <p> Your boards: </p>
     <ul>
         {% for c in cards %}
-        <li> {{ c.type_ }} <button type="submit" > remove </button> </li>
+        <li> {{ c.type_ }} <button id=" {{ c.id }} " type="submit" > Edit </button> </li>
         {% endfor %}
     </ul>
 
@@ -31,22 +31,16 @@
 
         <form action=" " method="post">
           <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
+               {{ form.hidden_tag() }}
                 <div class="form-label-group">
-
-
+                  {{ form.type_card(class="form-control", placeholder="Name of card",  autofocus=True) }}
+                  {{ form.type_card.label }}
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-label-group">
-
-                </div>
-              </div>
-            </div>
           </div>
+             {{ form.submit(class="btn btn-primary btn-block")}}
 
         </form>
+                </div>
         </div>
 </div>
 </div>

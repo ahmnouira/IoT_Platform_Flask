@@ -46,7 +46,7 @@
                     <td>{{ u.password }}</td>
                     <td>{{ u }}</td>
              <!--       {% if u.email != "ahmnouira@gmail.com" %} -->
-                    <td><button type="submit">delete</button> </td>
+                    <td> {{ form.submit() }} </td>
                <!--     {% endif %} -->
                   </tr>
                   {% endfor %}
@@ -55,7 +55,7 @@
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          <div class="card-footer small text-muted">Last Update at  {{ time }} </div>
         </div>
 
         <!-- <p class="small text-center text-muted my-5">

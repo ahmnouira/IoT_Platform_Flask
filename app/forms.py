@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField,SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
 
 
@@ -19,7 +19,24 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
 
 
+class EditProfileFrom(FlaskForm):
+    firstname = StringField('New first name ?', validators=[DataRequired()])
+    lastname = StringField('New last name ?', validators=[DataRequired()])
+    password = PasswordField('New password ?', validators=[DataRequired()])
+    password_confirm = PasswordField('Confirm Password', validators=[EqualTo('password')])
+    submit = SubmitField('Submit')
+
+
 class ForgotPasswordForm(FlaskForm):
     email = StringField('Enter email address', validators=[DataRequired(), Email()])
     submit = SubmitField('Reset Password')
+
+
+class Boards(FlaskForm):
+    type_card = StringField('Name of card', validators=[DataRequired()])
+    submit = SubmitField('Add')
+
+
+class EditUsers(FlaskForm):
+    submit = SubmitField('Delete')
 
