@@ -1,0 +1,48 @@
+{% extends 'base_dashboards.html'%}
+
+{% block content_dashboards %}
+<div class="content-wrapper">
+<div class="container-fluid">
+
+
+<h1> Hi <strong> {{ current_user.firstname }} {{ current_user.lastname }} </strong> Welcome to our IoT platform :
+
+
+
+</h1>
+
+    <hr>
+
+    <div>
+    <p> Your boards: </p>
+    <ul>
+        {% for c in cards %}
+        <li> {{ c.type_ }} <button id=" {{ c.id }} " type="submit" > Edit </button> </li>
+        {% endfor %}
+    </ul>
+
+    </div>
+
+    <div> To add a new board fill the following form:</div>
+        <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Add New Board Connected</div>
+      <div class="card-body">
+      </div>
+
+        <form action=" " method="post">
+          <div class="form-group">
+               {{ form.hidden_tag() }}
+                <div class="form-label-group">
+                  {{ form.type_card(class="form-control", placeholder="Name of card",  autofocus=True) }}
+                  {{ form.type_card.label }}
+                </div>
+          </div>
+             {{ form.submit(class="btn btn-primary btn-block")}}
+
+        </form>
+                </div>
+        </div>
+</div>
+</div>
+
+{% endblock %}

@@ -6,37 +6,38 @@
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Login</div>
       <div class="card-body">
-        <form>
+        <form method="post" action="">
+           {{ form.hidden_tag() }}
           <div class="form-group">
             <div class="form-label-group">
-              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
-              <label for="inputEmail">Email address</label>
+              <!-- using Flask-wtf -->
+              {{ form.email(class="form-control", autofocus = True, placeholder ="{{form.email.label}}") }}
+              {{ form.email.label}}
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-              <label for="inputPassword">Password</label>
+              {{ form.password(class="form-control", autofocus =True, placeholder ="{{from.password.label}}" )}}
+              {{ form.password.label }}
             </div>
           </div>
           <div class="form-group">
             <div class="checkbox">
-              <label>
-                <input type="checkbox" value="remember-me">
-                Remember Password
-              </label>
+             {{ form.remember_me() }}{{ form.remember_me.label}}
             </div>
           </div>
-          <a class="btn btn-primary btn-block" href="index">Login</a>
+          <p>{{ form.submit(class="btn btn-primary btn-block") }}</p>
         </form>
         <div class="text-center">
-          <a class="d-block small mt-3" href="register">Register an Account</a>
-          <a class="d-block small" href="forgot_password">Forgot Password?</a>
+          <a class="d-block small mt-3" href="{{ url_for('register') }}">Register an Account</a>
+          <a class="d-block small" href=" {{ url_for('forgot_password_request') }} ">Forgot Password?</a>
         </div>
       </div>
     </div>
   </div>
+{% include '_footer.html' %}
 {% endblock %}
+
 
 
 

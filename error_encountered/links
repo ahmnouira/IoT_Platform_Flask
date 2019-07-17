@@ -1,1 +1,5 @@
 https://superuser.com/questions/603026/mysql-how-to-fix-access-denied-for-user-rootlocalhost
+
+
+* get the IP address of your machine using Python 
+https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib

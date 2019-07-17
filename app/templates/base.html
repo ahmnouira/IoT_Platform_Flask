@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="IoT Platform">
   <meta name="author" content="Ahmed Nouira">
+  <link rel="shortcut icon" href="{{ url_for('static',filename='fav.ico') }}" type="image/x-icon">
+ <link rel="icon" href="{{ url_for('static', filename='fav.ico') }}" type="image/x-icon">
 
   {% if title %}
     <title> {{ title }} </title>
@@ -21,9 +23,25 @@
   <!-- Custom styles for this template-->
   <link href="../static/css/sb-admin.css" rel="stylesheet">
 
+  <!-- Page level plugin CSS-->
+  <link href="../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+      <!-- Page level plugin CSS-->
+  <link href="../static/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
 </head>
 
 <body class="bg-light">   <!-- backgournd color -->
+
+
+ <
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
 
 
 
@@ -32,62 +50,19 @@
 
 
 
-  <!-- Footer Elements -->
-
-<!-- Footer -->
-<footer class="page-footer font-small blue fixed-bottom">
-
-    <!-- Social buttons -->
-    <div class="container">
-    <ul class="list-unstyled list-inline text-center">
-      <li class="list-inline-item">
-        <a class="btn-floating btn-fb mx-1">
-          <i class="fab fa-facebook-f"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-tw mx-1">
-          <i class="fab fa-twitter"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-gplus mx-1">
-          <i class="fab fa-google-plus-g"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-li mx-1">
-          <i class="fab fa-linkedin-in"> </i>
-        </a>
-      </li>
-      <li class="list-inline-item">
-        <a class="btn-floating btn-dribbble mx-1">
-          <i class="fab fa-dribbble"> </i>
-        </a>
-      </li>
-    </ul>
-    <!-- Social buttons -->
-  </div>
-
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2019 Copyright:
-    <a href="https://github.com/AhmNouira" target="_blank"> IoT Platform  </a>
-  </div>
-  <!-- Copyright -->
-
-</footer>
-<!-- Footer -->
-
-</footer>
-<!-- Footer -->
-
-
-
   <!-- Bootstrap core JavaScript-->
   <script src="../static/vendor/jquery/jquery.min.js"></script>
   <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- Core plugin JavaScript-->
   <script src="../static/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Page level plugin JavaScript-->
+  <script src="../static/vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="../static/js/sb-admin.min.js"></script>
+
+  <!-- Demo scripts for this page
+  <script src="../static/js/demo/chart-area-demo.js"></script> -->
 
 
 </body>

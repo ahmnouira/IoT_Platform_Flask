@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ super() }}
+<body id="page-top">
+
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+
+                <a class="navbar-brand" href="#"> ^^ My IoT Platform ^^ </a>
+                 {% if actives[1] or actives[2] or actives[3] %}
+                <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+                <i class=" fa fa-window-maximize"></i>
+
+                </button>
+                {% endif %}
+            </div>
+
+    <!-- Navbar -->
+
+
+
+    <ul class="nav navbar-nav">
+
+
+       <li class="nav-item active dropdown">   <!-- 'active' alume itme -->
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-user"></i>
+          <span>{{ current_user.firstname }} {{current_user.lastname }} </span>
+        </a>
+
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="{{ url_for('edit_profile') }} "> Edit Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ url_for('logout') }}"> Logout</a>
+        </div>
+
+      </li>
+
+     <!--
+      <li class="nav-item dropdown no-arrow">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user-circle fa-fw"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="#">Activity Log</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+        </div>
+      </li>  -->
+    </ul>
+    </div>
+
+  </nav>
+
+   <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+
+          {% if actives[0] %}
+      <li class="nav-item active">
+          {% else %}
+          <li class="nav-item">
+          {% endif %}
+        <a class="nav-link" href="{{ url_for('dashboard') }}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span> Dashboard </span>
+        </a>
+      </li>
+
+
+      <!-- charts  dht 11 -->
+        {% if actives[1] %}
+        <li class="nav-item active">
+          {% else %}
+          <li class="nav-item">
+          {% endif %}
+        <a class="nav-link" href="{{ url_for('dht11') }}">
+          <i class="fa fa-thermometer-half"></i>
+          <span> Temperature </span></a>
+      </li>
+       <!-- Humidity -->
+        {% if actives[2] %}
+        <li class="nav-item active">
+          {% else %}
+          <li class="nav-item">
+          {% endif %}
+        <a class="nav-link" href="{{ url_for('humidity') }}">
+          <i class="fa fa-tint"></i>
+          <span> Humidity </span></a>
+       </li>
+
+         <!-- Gaz -->
+        {% if actives[3] %}
+        <li class="nav-item active">
+          {% else %}
+          <li class="nav-item">
+          {% endif %}
+        <a class="nav-link" href="{{ url_for('gaz') }}">
+          <i class="fa fa-exclamation-triangle"></i>
+          <span> Gaz </span></a>
+       </li>
+
+
+        {% if current_user.email == admin_email %}
+
+         <li class="nav-item active">
+         <a class="nav-link" href="{{ url_for('users_edit') }}">
+          <i class="fa fa-users"></i>
+          <span> Edit & View Users </span></a>
+        {% endif %}
+         </li>
+    </ul>
+
+
+  {%  block content_dashboards %}
+
+   </div>
+  {% endblock %}
+
+  <!-- Scroll to Top Button
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a> -->
+
+{% endblock %}
