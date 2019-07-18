@@ -1,0 +1,14 @@
+version: '3'
+services:
+    iot_platform:
+        build: .
+        ports:
+            - "8000:5000"
+        env_file: .env
+        links:
+            - mysql:dbserver
+        restart: always
+    mysql:
+        image: "mysql/mysql-server:5.7"
+        env_file: .env-mysql
+        restart: always

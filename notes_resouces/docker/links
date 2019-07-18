@@ -1,0 +1,5 @@
+Solving Docker permission denied while trying to connect to the Docker daemon socket:
+https://techoverflow.net/2017/03/01/solving-docker-permission-denied-while-trying-to-connect-to-the-docker-daemon-socket/
+
+What does ‘sudo usermod -a -G group $USER’ do on Linux?
+https://techoverflow.net/2019/04/30/what-does-sudo-usermod-a-g-docker-user-do-on-linux/
