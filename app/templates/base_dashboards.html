@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ super() }}
-<body id="page-top">
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
         <div class="container-fluid">
@@ -31,7 +29,7 @@
         </a>
 
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
+          <a class="dropdown-item" href="/admin/">Settings</a>
           <a class="dropdown-item" href="{{ url_for('edit_profile') }} "> Edit Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{{ url_for('logout') }}"> Logout</a>
@@ -105,7 +103,7 @@
           <span> Gaz </span></a>
        </li>
 
-
+      <!--
         {% if current_user.email == admin_email %}
 
          <li class="nav-item active">
@@ -113,12 +111,11 @@
           <i class="fa fa-users"></i>
           <span> Edit & View Users </span></a>
         {% endif %}
-         </li>
+         </li>  -->
+
     </ul>
 
-
   {%  block content_dashboards %}
-
    </div>
   {% endblock %}
 

@@ -2,18 +2,15 @@
 {% block content  %}
   <div class="container">
     <div class="card card-register mx-auto mt-5">
-
       <div class="card-header">Edit Profile</div>
-
       <div class="card-body">
         <form action=" " method="post">
           {{ form.hidden_tag() }}    <!-- !!!!!!!!!!!!!!   -->
-
           <div class="form-group">
             <div class="form-row">
+
               <div class="col-md-6">
                 <div class="form-label-group">
-
                   {{form.firstname(class="form-control", placeholder="New first name ?", autofocus=True) }}
                   {{form.firstname.label }}
                 </div>
@@ -34,7 +31,7 @@
 
               <div class="col-md-6">
                 <div class="form-label-group">
-                  {{ form.password_confirm(class="form-control", placeholder ="New password ?") }}
+                  {{ form.password(class="form-control", placeholder ="New password ?") }}
                   {{ form.password.label }}
                 </div>
               </div>
@@ -59,5 +56,6 @@
       </div>
     </div>
   </div>
+
 {% include '_footer.html' %}
 {% endblock %}

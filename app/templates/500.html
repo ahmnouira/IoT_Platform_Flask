@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-1">500</h1>
+        <p class="lead"> An expected error has occurred
+            <p>The administrator has been notified, sorry for the inconvenience ! <a href="javascript:history.back()"> Back </a></p>
+             to the previous page, or
+             <a href="{{ url_for('login')}}">return home</a>.
+        </p>
+</div>
+{% endblock %}

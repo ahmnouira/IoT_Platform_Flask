@@ -1,0 +1,16 @@
+{% extends "admin/master.html" %}
+
+{% block body %}
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <h1> Hello,  <strong> {{ g.user.firstname }} </strong> Welcome Back !
+        </h1>
+        <p class="lead">If you want to return
+          <a href="javascript:history.back()"> go back </a>
+          to the previous page, or
+          <a href="{{ url_for('logout')}}"> logout</a>.</p>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 from app import App, db
 from flask import render_template
 from flask import url_for, redirect, Response
+from flask import g          # special object
 from app.forms import LoginForm
 from app.forms import RegisterForm
 from app.forms import ForgotPasswordForm
@@ -10,7 +11,7 @@ from app.forms import EditUsers
 from flask_login import current_user, login_user# current_user
 from flask_login import login_required
 from flask_login import logout_user
-from app.models import User, Role, Card, Dht11
+from app.models import User, Role, Cards, Dht11
 from flask import request, flash
 from werkzeug.urls import url_parse
 from app.config import Config
@@ -59,15 +60,14 @@ def register():
 
             user_reg = User(firstname=form_register.firstname.data, lastname=form_register.lastname.data,
                             email=form_register.email.data, password= form_register.password.data, role=admin_role)
-            #user_reg.set_password(form_register.password.data)
+            user_reg.set_password(form_register.password.data)
         else:
             user_reg = User(firstname=form_register.firstname.data, lastname=form_register.lastname.data,
                             email=form_register.email.data, password=form_register.password.data)
-            #user_reg.set_password(form_register.password.data)
+            user_reg.set_password(form_register.password.data)
         db.session.add(user_reg)
         db.session.commit()
         flash('Login requested for user {} {}'.format(form_register.firstname.data, form_register.lastname.data))
-
 
         return redirect(url_for('login'))
 
@@ -95,16 +95,14 @@ def dashboard():
     # user
     user_profile = User.query.filter_by(email=current_user.email).first()
     # cards the user have
-    cards_ = Card.query.filter_by(owner=user_profile).all()
+    cards_ = Cards.query.filter_by(owner=user_profile).all()
     print("cardes: ", cards_)
     admin_email = Config.ADMINS[0]
     print("who is the user ", user_profile)
     if form.validate_on_submit():
-        c = Card(type_=form.type_card.data, owner=user_profile)
+        c = Boards(type_=form.type_card.data, owner=user_profile)
         print(c)
         db.session.add(c)
-
-
         db.session.commit()
 
         return redirect(url_for('dashboard'))
@@ -116,7 +114,7 @@ def dashboard():
 
     #print("nb cards", cards)
     #cards = Card
-    return render_template('dashboard.html', actives=actives, cards=cards_, admin_email=admin_email, user=user_profile, title="dashboard", form= form)
+    return render_template('dashboard.html', actives=actives, cards=cards_, admin_email=admin_email, user=user_profile, title="dashboard", form=form)
 
 
 @App.route('/chart_data_temperature')
@@ -182,3 +180,12 @@ def edit_profile():
         db.session.commit()
         return redirect(url_for('dashboard'))
     return render_template('edit_profile.html', title="Edit_profile", form=form)
+
+
+@App.before_request
+def before_request():
+    g.user = current_user                       # user accessible through g.user
+
+    if current_user.is_authenticated:           # add last seen time
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()

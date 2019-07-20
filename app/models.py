@@ -1,5 +1,7 @@
+from builtins import property
+
 from app import db
-from werkzeug.security import  generate_password_hash  # to generate a hashed password
+from werkzeug.security import generate_password_hash  # to generate a hashed password
 from werkzeug.security import check_password_hash      # to check the hashed password
 from flask_login import UserMixin
 from app import login
@@ -14,17 +16,40 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(32))
     password_hash = db.Column(db.String(128))
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    created_timestamp = db.Column(db.DateTime, default=datetime.now)
+    about_me = db.Column(db.String(140))  # about_me
+    admin = db.Column(db.Boolean, default=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    cards = db.relationship('Card', backref='owner', lazy='dynamic')
+    cards = db.relationship('Cards', backref='owner', lazy='dynamic')
 
     def __repr__(self):
-        return '<User {0} {1}>'.format(self.firstname, self.lastname)
+        return '{0} {1}, {2}'.format(self.firstname, self.lastname, self.email)
 
     def set_password(self, password):  # hashing method
         self.password_hash = generate_password_hash(password)
 
+    def is_admin(self):
+        return self.admin
+
+    @staticmethod
+    def make_password(password):
+        return generate_password_hash(password)
+
     def check_password(self, password):  # validate password method
         return check_password_hash(self.password_hash, password)
+
+    @property
+    def user_password(self):
+        return str(self.password_hash)[20:40]
+
+    @property                         # property to return value of about_me
+    def about_me_(self):
+        return str(self.about_me)[:100]
+
+   # @property
+   # def cards(self):
+    #    return ','.join(card.type_ for card in self.cards )
 
 
 class Role(db.Model):
@@ -34,20 +59,19 @@ class Role(db.Model):
     # each role can belong to many users, but one user can have one role
     users = db.relationship('User', backref='role')
 
-
     def __repr__(self):
-        return '<Role {}>'.format(self.name)
+        return '{}'.format(self.name)
 
 
-class Card(db.Model):
+class Cards(db.Model):
     __tablename__ = 'boards'
     id = db.Column(db.Integer, primary_key=True)
-    type_ = db.Column(db.String(48), index=True)
-    # e
+    name = db.Column(db.String(48), index=True)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
-        return '<Card {}>'.format(self.type_)
+        return '{}'.format(self.name)
 
 
 class Dht11(db.Model):
@@ -56,8 +80,10 @@ class Dht11(db.Model):
     temperature = db.Column(db.String(48), index=True)
     humidity = db.Column(db.String(48), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
     def __repr__(self):
         return '<temp:{0}, humidity:{1}'.format(self.temperature, self.humidity)
+
 
 class Gaz(db.Model):
     __tablename__ = 'gaz'
@@ -67,5 +93,5 @@ class Gaz(db.Model):
 
 
 @login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(id_):
+    return User.query.get(int(id_))

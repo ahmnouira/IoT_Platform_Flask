@@ -9,7 +9,7 @@
   <meta name="description" content="IoT Platform">
   <meta name="author" content="Ahmed Nouira">
   <link rel="shortcut icon" href="{{ url_for('static',filename='fav.ico') }}" type="image/x-icon">
- <link rel="icon" href="{{ url_for('static', filename='fav.ico') }}" type="image/x-icon">
+  <!-- <link rel="icon" href="./images/fav.ico" type="image/x-icon"> -->
 
   {% if title %}
     <title> {{ title }} </title>
@@ -33,16 +33,13 @@
 
 <body class="bg-light">   <!-- backgournd color -->
 
-
- <
       {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
             <div class="alert alert-info" role="alert">{{ message }}</div>
             {% endfor %}
         {% endif %}
-        {% endwith %}
-
+      {% endwith %}
 
 
  {% block content %} {% endblock %}
@@ -63,7 +60,6 @@
 
   <!-- Demo scripts for this page
   <script src="../static/js/demo/chart-area-demo.js"></script> -->
-
 
 </body>
 </html>

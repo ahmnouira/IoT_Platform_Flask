@@ -4,11 +4,14 @@ from app.networks import get_ip
 
 
 class Config(object):
+    APPLICATION_DIR = os.path.dirname(os.path.realpath(__file__))
+    STATIC_DIR = os.path.join(APPLICATION_DIR, 'static')
+    IMAGES_DIR = os.path.join(APPLICATION_DIR, 'images')
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     #connection to mysql db
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://bob:secret@{}/testF'.format(get_ip())      
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    DEBUG = os.environ.get('DEBUG') or True
+    DEBUG = True
     TESTING = True
     ADMINS = ['ahmnouira@gmail.com']
     ADMIN_PASSWORD = 'aze'

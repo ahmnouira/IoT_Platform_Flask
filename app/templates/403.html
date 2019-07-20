@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="display-1"> 403 </h1>
+        <p class="lead"> Forbidden Page.
+        <strong>You don't have permission to acsses the requested page.</strong>
+         You can
+          <a href="javascript:history.back()"> go back </a>
+          to the previous page, or
+            <a href="{{ url_for('login')}}">return home</a>.</p>
+</div>
+{% endblock %}

@@ -45,5 +45,5 @@ Access the running app in a browser at the URL written to the console (most like
 2. run `docker-compose --version` to check if docker-compose is installed
 3. run `docker-compose up -d --build` to build the docker image of the flask app and mysql database
 3. `docker images` list the local avaible images
-4. go to [](http://localhost:8000) to start the container 
+4. go to http://localhost:8000 to start the container 
 
