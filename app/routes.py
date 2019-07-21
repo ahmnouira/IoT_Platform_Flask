@@ -1,7 +1,7 @@
 from app import App, db
 from flask import render_template
 from flask import url_for, redirect, Response
-from flask import g          # special object
+from flask import g                             # special object
 from app.forms import LoginForm
 from app.forms import RegisterForm
 from app.forms import ForgotPasswordForm
@@ -29,12 +29,13 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))
     form_login = LoginForm()
-    who_user =""
+    #who_user =""
     if form_login.validate_on_submit():
         user = User.query.filter_by(email=form_login.email.data).first()
-        print('user role!!! :', user.role)
-        who_user = user
+        # print('user role!!! :', user.role)
+        # who_user = user
         if user is None:
+            flash('Invalid Email')
             return redirect(url_for('login'))
         login_user(user, remember=form_login.remember_me.data)
         next_page = request.args.get('next')
@@ -56,14 +57,13 @@ def register():
     print("email entered", admin)
     if form_register.validate_on_submit():
 
-        if admin == Config.ADMINS[0]:
-
+        if admin == Config.ADMIN:
             user_reg = User(firstname=form_register.firstname.data, lastname=form_register.lastname.data,
-                            email=form_register.email.data, password= form_register.password.data, role=admin_role)
+                            email=form_register.email.data, password=form_register.password.data, admin= True)
             user_reg.set_password(form_register.password.data)
         else:
             user_reg = User(firstname=form_register.firstname.data, lastname=form_register.lastname.data,
-                            email=form_register.email.data, password=form_register.password.data)
+                            email=form_register.email.data, password=form_register.password.data, admin=False)
             user_reg.set_password(form_register.password.data)
         db.session.add(user_reg)
         db.session.commit()
@@ -97,7 +97,7 @@ def dashboard():
     # cards the user have
     cards_ = Cards.query.filter_by(owner=user_profile).all()
     print("cardes: ", cards_)
-    admin_email = Config.ADMINS[0]
+    admin_email = Config.ADMIN
     print("who is the user ", user_profile)
     if form.validate_on_submit():
         c = Boards(type_=form.type_card.data, owner=user_profile)
@@ -184,8 +184,7 @@ def edit_profile():
 
 @App.before_request
 def before_request():
-    g.user = current_user                       # user accessible through g.user
-
-    if current_user.is_authenticated:           # add last seen time
+    g.user = current_user                       # for user accessible through g.user
+    if current_user.is_authenticated:           # add last seen time update
         current_user.last_seen = datetime.utcnow()
         db.session.commit()

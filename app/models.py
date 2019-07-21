@@ -69,28 +69,31 @@ class Cards(db.Model):
     name = db.Column(db.String(48), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    dht11_value = db.relationship('Dht11', backref='dht11_sensor')
+    gaz_value = db.relationship('Gaz', backref='gaz_sensor')
 
     def __repr__(self):
         return '{}'.format(self.name)
 
 
 class Dht11(db.Model):
-    __tablename__ = 'dht11'
+    __tablename__ = 'Dht11'
     id = db.Column(db.BigInteger, primary_key=True)
     temperature = db.Column(db.String(48), index=True)
     humidity = db.Column(db.String(48), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    card_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
 
     def __repr__(self):
         return '<temp:{0}, humidity:{1}'.format(self.temperature, self.humidity)
 
 
 class Gaz(db.Model):
-    __tablename__ = 'gaz'
+    __tablename__ = 'Gaz'
     id = db.Column(db.BigInteger, primary_key=True)
     gaz = db.Column(db.String(48), index=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
+    card_id = db.Column(db.Integer, db.ForeignKey('boards.id'))
 
 @login.user_loader
 def load_user(id_):

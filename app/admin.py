@@ -1,3 +1,6 @@
+
+# implementing admin page
+
 from flask_admin.contrib.sqla import ModelView  # contrib pakage contains special veiw classes
 from flask_admin import Admin
 from app import db, App
