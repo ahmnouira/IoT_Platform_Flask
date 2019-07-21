@@ -1,2 +1,4 @@
 -r base.txt 
 gunicorn==19.9.0
+pymysql==0.9.3
+requests==2.22.0

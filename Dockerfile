@@ -12,7 +12,6 @@ COPY requirements requirements
 #RUN pip install gunicorn --user
 
 RUN pip install -r requirements/docker.txt 
-RUN pip install pymysql --user
 ENV FLASK_APP main.py
 
 # runtime configuration 
