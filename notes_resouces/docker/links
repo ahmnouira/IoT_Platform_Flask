@@ -3,3 +3,7 @@ https://techoverflow.net/2017/03/01/solving-docker-permission-denied-while-tryin
 
 What does ‘sudo usermod -a -G group $USER’ do on Linux?
 https://techoverflow.net/2019/04/30/what-does-sudo-usermod-a-g-docker-user-do-on-linux/
+
+push docker compose
+https://github.com/moby/moby/issues/35868
+https://docs.docker.com/compose/reference/push/

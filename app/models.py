@@ -6,7 +6,7 @@ from werkzeug.security import check_password_hash      # to check the hashed pas
 from flask_login import UserMixin
 from app import login
 from datetime import datetime
-
+from flask import url_for
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -31,6 +31,32 @@ class User(db.Model, UserMixin):
 
     def is_admin(self):
         return self.admin
+
+    # converts a user object to python representation need it for API
+    def to_dict(self, include_email=False):
+        data = {
+            'id' : self.id,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'last_seen': self.last_seen,  # isoformat() + 'Z',  ISO 8601 format, 'Z' timezone for UTC
+            'about_me':self.about_me,
+            'cards': self.cards.count(),
+            '_links': {
+                'self': url_for('api.get_user', id=self.id),
+                'cards': url_for('api.get_cards', id=self.id),
+
+            }
+
+        }
+        if include_email:
+            data['email'] = self.email
+        return data
+
+    def form_dict(self, data, new_user=False):
+        for field in data:
+            setattr(self, field, data)  # set the new value of attribute
+        if new_user and 'password' in data:
+            self.set_password(data['password'])
 
     @staticmethod
     def make_password(password):

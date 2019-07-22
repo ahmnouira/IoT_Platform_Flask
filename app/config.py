@@ -2,6 +2,8 @@
 import os
 from app.networks import get_ip
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Config(object):
     APPLICATION_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -12,7 +14,8 @@ class Config(object):
     TESTING = True
 
     # connection to mysql (local/server)  db configuration
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://bob:secret@{}/testF'.format(get_ip())      
+    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql://bob:secret@{}/testF'.format(get_ip())
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     ADMIN = os.environ.get('ADMIN') or "ahmnouira@gmail.com"

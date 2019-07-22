@@ -2,6 +2,7 @@ version: '3'
 services:
     iot_platform:
         build: .
+        image: "iot_platform_flaskXX"
         ports:
             - "8000:5000"
         env_file: .env

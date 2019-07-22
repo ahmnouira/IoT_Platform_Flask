@@ -35,7 +35,7 @@ def login():
         # print('user role!!! :', user.role)
         # who_user = user
         if user is None:
-            flash('Invalid Email')
+            flash('Please register first ')
             return redirect(url_for('login'))
         login_user(user, remember=form_login.remember_me.data)
         next_page = request.args.get('next')
