@@ -9,22 +9,18 @@
         <hr>
 
      <div>
-         <p> Your boards: </p>
+         <h3> --> You have now <strong style="color:red"> {{ c }} </strong> cards registered in this platform </h3>
+
+         <h4 style="color:red"><u> Your boards are: </u></h4>
          <ul>
             {% for c in cards %}
-         <li> {{ c.type_ }} <button id=" {{ c.id }} " type="submit" > Edit </button> </li>
+         <li><h5> name: {{ c.name }}, reference: {{c.id }}  </h5></li>
             {% endfor %}
          </ul>
 
      </div>
 
-     <div> To add a new board fill the following form:</div>
-        <div class="card card-register mx-auto mt-5">
-            <div class="card-header">Add New Board Connected</div>
-                 <div class="card-body">
-                 </div>
-
-             <form action=" " method="post">
+        <!--     <form action=" " method="post">
                 <div class="form-group">
                 {{ form.hidden_tag() }}
                     <div class="form-label-group">
@@ -34,9 +30,7 @@
                  </div>
                  {{ form.submit(class="btn btn-primary btn-block")}}
 
-              </form>
-            </div>
-        </div>
+              </form> -->
      </div>
  </div>
 

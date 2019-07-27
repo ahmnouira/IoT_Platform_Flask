@@ -4,7 +4,7 @@ from flask import g
 
 
 @App.errorhandler(403)
-def forbidden_response(id):
+def forbidden_response(error):
     admin = g.user.is_authenticated and g.user.is_admin()
     return render_template('403.html', title="Forbidden")
 

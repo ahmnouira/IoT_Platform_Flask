@@ -70,6 +70,24 @@
         </a>
       </li>
 
+        <!-- Cards Manager -->
+          <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('cards', id=current_user.id) }}">
+          <i class="fa fa-credit-card"></i>
+          <span> Cards Manager  </span>
+        </a>
+      </li>
+
+
+
+
+
+          <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('dashboard') }}">
+          <i class="fa fa-bullhorn"></i>
+          <span> About API ? </span>
+        </a>
+      </li>
 
       <!-- charts  dht 11 -->
         {% if actives[1] %}
@@ -102,26 +120,15 @@
           <i class="fa fa-exclamation-triangle"></i>
           <span> Gaz </span></a>
        </li>
-
-      <!--
-        {% if current_user.email == admin_email %}
-
-         <li class="nav-item active">
-         <a class="nav-link" href="{{ url_for('users_edit') }}">
-          <i class="fa fa-users"></i>
-          <span> Edit & View Users </span></a>
-        {% endif %}
-         </li>  -->
-
     </ul>
 
   {%  block content_dashboards %}
    </div>
   {% endblock %}
 
-  <!-- Scroll to Top Button
+  <!-- Scroll to Top Button -->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
-  </a> -->
+  </a>
 
 {% endblock %}

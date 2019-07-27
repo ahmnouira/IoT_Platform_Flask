@@ -23,7 +23,8 @@ from random import randint
 temp = []
 count = 0
 
-@App.route('/login', methods=['GET', 'POST'])
+
+@App.route('/login/', methods=['GET', 'POST'])
 @App.route('/', methods=['POST', 'GET'])
 def login():
     if current_user.is_authenticated:
@@ -45,7 +46,7 @@ def login():
     return render_template('index.html', form=form_login, title="Login")
 
 
-@App.route('/register', methods=['GET', 'POST'])
+@App.route('/register/', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:  # redirect the user if he is authenticated
         return redirect(url_for('dashboard'))
@@ -80,13 +81,13 @@ def logout():
     return redirect(url_for('login'))
 
 
-@App.route('/forgot_password_request')
+@App.route('/forgot_password_request/')
 def forgot_password_request():
     form_forgot_password = ForgotPasswordForm()
     return render_template('forgot_password.html', form=form_forgot_password, title="Reset_Password_Request")
 
 
-@App.route('/dashboard', methods = ['GET', 'POST'])
+@App.route('/dashboard/', methods = ['GET', 'POST'])
 @login_required    # protect this page against unauthenticated user
 def dashboard():
     global count
@@ -112,12 +113,12 @@ def dashboard():
     # c_delate.delete()
 
 
-    #print("nb cards", cards)
+    print("nb cards",user_profile.cards.count())
     #cards = Card
-    return render_template('dashboard.html', actives=actives, cards=cards_, admin_email=admin_email, user=user_profile, title="dashboard", form=form)
+    return render_template('dashboard.html', actives=actives, cards=cards_, admin_email=admin_email, user=user_profile, title="dashboard", form=form, c= int(user_profile.cards.count()))
 
 
-@App.route('/chart_data_temperature')
+@App.route('/chart_data_temperature/')
 def chart_data_temperature():
     def generate():
         while True:
@@ -137,14 +138,14 @@ def chart_data_temperature():
     return Response(generate(), mimetype='text/event-stream')
 
 
-@App.route('/dht11')
+@App.route('/dht11/')
 @login_required
 def dht11():
     actives = [0, 1, 0, 0]  # dasboard, dht11, gaz
     return render_template('dht11.html', actives=actives, title=" Temperature ", time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
-@App.route('/humidity')
+@App.route('/humidity/')
 @login_required
 def humidity():
     actives = [0, 0, 1, 0]
@@ -158,13 +159,13 @@ def gaz():
     return render_template('gaz.html', actives=actives, title="gaz")
 
 
-@App.route('/users_edit', methods = ['GET', 'POST'])
+@App.route('/cards_edit', methods=['GET', 'POST'])
 @login_required
-def users_edit():
+def cards_edit():
     actives = [0, 0, 0, 0]
-    edit_form = EditUsers()
-    users = User.query.all()
-    return render_template('users_edit.html', title ="Users_edit", actives=actives, users= users, time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), form=edit_form)
+    user = User.query.all()
+    cards = user.cards
+    return render_template('users_edit.html', title ="Users_edit", actives=actives, users= user, time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
 @App.route('/edit_profile', methods=['GET', 'POST'])
@@ -180,6 +181,14 @@ def edit_profile():
         db.session.commit()
         return redirect(url_for('dashboard'))
     return render_template('edit_profile.html', title="Edit_profile", form=form)
+
+
+@App.route('/users/<id>/cards', methods=['GET', 'POST'])
+def cards(id):
+    actives = [0, 0, 0, 1]
+    user = User.query.get_or_404(id)
+    cards = user.cards
+    return render_template('users_cards.html', user=user.full_name(), card=cards.count(), actives=actives)
 
 
 @App.before_request
