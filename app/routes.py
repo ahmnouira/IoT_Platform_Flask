@@ -7,7 +7,7 @@ from app.forms import RegisterForm
 from app.forms import ForgotPasswordForm
 from app.forms import EditProfileFrom
 from app.forms import Boards
-from app.forms import EditUsers
+from app.forms import EditCards
 from flask_login import current_user, login_user# current_user
 from flask_login import login_required
 from flask_login import logout_user
@@ -91,7 +91,7 @@ def forgot_password_request():
 @login_required    # protect this page against unauthenticated user
 def dashboard():
     global count
-    actives = [1, 0, 0, 0]
+    actives = [1, 0, 0, 0, 0, 0]
     form = Boards()
     # user
     user_profile = User.query.filter_by(email=current_user.email).first()
@@ -100,18 +100,18 @@ def dashboard():
     print("cardes: ", cards_)
     admin_email = Config.ADMIN
     print("who is the user ", user_profile)
-    if form.validate_on_submit():
-        c = Boards(type_=form.type_card.data, owner=user_profile)
-        print(c)
-        db.session.add(c)
-        db.session.commit()
 
-        return redirect(url_for('dashboard'))
+   # if form.validate_on_submit():
+    #    c = Boards(type_=form.type_card.data, owner=user_profile)
+     #   print(c)
+     #   db.session.add(c)
+      #  db.session.commit()
+
+       # return redirect(url_for('dashboard'))
 
     #r = request.form['1'].strip()
     # c_delate = Card.query.get(2)
     # c_delate.delete()
-
 
     print("nb cards",user_profile.cards.count())
     #cards = Card
@@ -141,31 +141,60 @@ def chart_data_temperature():
 @App.route('/dht11/')
 @login_required
 def dht11():
-    actives = [0, 1, 0, 0]  # dasboard, dht11, gaz
+    actives = [0, 0, 0, 1, 0, 0]  # dasboard, dht11, gaz
     return render_template('dht11.html', actives=actives, title=" Temperature ", time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 
 @App.route('/humidity/')
 @login_required
 def humidity():
-    actives = [0, 0, 1, 0]
+    actives = [0, 0 ,0, 0, 1, 0]
     return render_template('humidity.html', actives=actives, title="Humidity")
 
 
 @App.route('/gaz')
 @login_required
 def gaz():
-    actives = [0, 0, 0, 1]
+    actives = [0, 0, 0, 0, 0, 1]
     return render_template('gaz.html', actives=actives, title="gaz")
 
 
-@App.route('/cards_edit', methods=['GET', 'POST'])
+@App.route('/cards_edit/', methods=['GET', 'POST'])
 @login_required
 def cards_edit():
-    actives = [0, 0, 0, 0]
-    user = User.query.all()
-    cards = user.cards
-    return render_template('users_edit.html', title ="Users_edit", actives=actives, users= user, time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    actives = [0, 1, 0, 0, 0, 0]
+    cards = Cards.query.filter_by(user_id=current_user.id)
+    form = EditCards()
+    if form.validate_on_submit():
+        for c in cards:
+
+            print('dfdfd', request.form['delete'])
+            db.session.delete(Cards.query.get(request.form['delete']))
+            db.session.commit()
+            return redirect(url_for('dashboard'))
+   # cards = user.cards
+    return render_template('users_cards.html', title="users_cards", actives=actives, cards=cards, time=datetime.now().strftime('%Y-%m-%d,  %H:%M:%s'), form=form)
+
+
+@App.route('/about_api')
+@login_required
+def about_api():
+    actives = [0, 0, 1, 0, 0, 0]
+    return render_template('about_api.html', title="about_API", actives=actives)
+
+
+@App.route('/create_card', methods=['GET', 'POST'])
+@login_required
+def create_card():
+    user = current_user
+    form_card = Boards()
+    if form_card.validate_on_submit():
+        new_card = Cards(name=form_card.name.data, owner=user)
+        db.session.add(new_card)
+        db.session.commit()
+        # flash('You have added a new card: {}'.format(new_card.name))
+        return redirect(url_for('cards_edit'))
+    return render_template('create_card.html', title='create_card', form=form_card)
 
 
 @App.route('/edit_profile', methods=['GET', 'POST'])
@@ -181,14 +210,6 @@ def edit_profile():
         db.session.commit()
         return redirect(url_for('dashboard'))
     return render_template('edit_profile.html', title="Edit_profile", form=form)
-
-
-@App.route('/users/<id>/cards', methods=['GET', 'POST'])
-def cards(id):
-    actives = [0, 0, 0, 1]
-    user = User.query.get_or_404(id)
-    cards = user.cards
-    return render_template('users_cards.html', user=user.full_name(), card=cards.count(), actives=actives)
 
 
 @App.before_request

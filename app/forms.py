@@ -33,10 +33,10 @@ class ForgotPasswordForm(FlaskForm):
 
 
 class Boards(FlaskForm):
-    type_card = StringField('Name of card', validators=[DataRequired()])
-    submit = SubmitField('Add')
+    name = StringField('Name of the card', validators=[DataRequired()])
+    submit = SubmitField('Create')
 
 
-class EditUsers(FlaskForm):
+class EditCards(FlaskForm):
     submit = SubmitField('Delete')
 

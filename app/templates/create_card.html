@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header"> Create a New Card </div>
+      <div class="card-body">
+        <form method="post" action="">
+           {{ form.hidden_tag() }}
+          <div class="form-group">
+            <div class="form-label-group">
+              <!-- using Flask-wtf -->
+              {{ form.name(class="form-control", autofocus = True, placeholder ="{{form.name.label}}") }}
+              {{ form.name.label}}
+            </div>
+          </div>
+
+          <p>{{ form.submit(class="btn btn-primary btn-block") }}</p>
+        </form>
+        <div class="text-center">
+          <a class="d-block small mt-3" href="javascript:history.back()"> Back </a>
+          <a class="d-block small" href=" {{ url_for('dashboard') }} "> Go to My Dashboard ?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% include '_footer.html' %}
+{% endblock %}

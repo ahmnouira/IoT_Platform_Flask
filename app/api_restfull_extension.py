@@ -121,7 +121,7 @@ class UserCardAPI(Resource):
             response[c.id] = {
                 'name': c.name,
                 'owner': str(User.query.filter_by(id=c.user_id).first().full_name()),
-                'owner_email': str(User.query.get_or_404(c.id).email),
+                'owner_email': str(User.query.filter_by(id=c.user_id).first().email),
                 'created': c.timestamp,
                 'dh11_values': c.dht11_values.count(),
                 'gaz_values': c.gaz_values.count(),
@@ -156,7 +156,7 @@ class CardsAPI(Resource):
             response[c.id] = {
                 'name': c.name,
                 'owner': str(User.query.filter_by(id=c.user_id).first().full_name()),
-                'owner_email': str(User.query.get_or_404(c.id).email),
+                'owner_email': str(User.query.filter_by(id=c.user_id).first().email),
                 'created': c.timestamp,
                 'dh11_values': c.dht11_values.count(),
                 'gaz_values': c.gaz_values.count(),
@@ -183,7 +183,7 @@ class CardsAPI(Resource):
         response[card.id] = {
             'name': card.name,
             'owner': str(User.query.filter_by(id=card.user_id).first().full_name()),
-            'owner_email': str(User.query.get_or_404(card.id).email),
+            'owner_email': str(User.query.filter_by(id=card.user_id).first().email),
             'created': card.timestamp,
             'dh11_values': card.dht11_values.count(),
             'gaz_values': card.gaz_values.count(),
@@ -212,7 +212,7 @@ class CardsAPI(Resource):
         response[c.id] = {
             'name': card.name,
             'owner': str(User.query.filter_by(id=card.user_id).first().full_name()),
-            'owner_email': str(User.query.get_or_404(card.id).email),
+            'owner_email': str(User.query.filter_by(id=card.user_id).first().email),
             'created': card.timestamp,
             'dh11_values': card.dht11_values.count(),
             'gaz_values': card.gaz_values.count(),
@@ -287,9 +287,9 @@ class CardDht11API(Resource):
 
 
 API.add_resource(UserAPI, '/api/users/',  '/api/users/<int:id>/')
-API.add_resource(CardsAPI, '/api/cards/', '/api/cards/<int:id>/')
+API.add_resource(CardsAPI, '/api/cards/', '/api/cards/<int:id>/', endpoint="card")
 API.add_resource(UserCardAPI, '/api/users/<int:id_>/cards/')
-API.add_resource(CardDht11API, '/api/cards/<int:id>/dht11/')
+API.add_resource(CardDht11API, '/api/cards/<int:id>/dht11/', endpoint="card_dht11")
 
 
 

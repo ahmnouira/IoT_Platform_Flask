@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base_dashboards.html'%}
 
-</body>
-</html>
+{% block content_dashboards %}
+<div class="container" xmlns="http://www.w3.org/1999/html">
+
+    <h1 class="text-success display-4 text-center" > API Quick Start </h1>
+
+    <p> All of our examples use the <code class="text-danger font-weight-bold "> curl </code>command line tool already available on most systems.</p>
+    <p>The <span class="font-weight-bold text-danger"> ^^ My IoT Platform ^^ </span> API lets you send/receive information about your current data and do everything else.</p>
+    <p class="font-weight-bold"> Example: Get Your Current Cards </p>
+
+    <div class="card">
+        <div class="card card-header bg-success text-light"> Request </div>
+    <div class="card-body bg-dark">
+    <code class="text-light small"> curl http://localhost:5000/api/users/{{current_user.id }}/cards/ </code>
+    </div>
+    </div>
+    <br>
+
+    <div class="card">
+        <div class="card card-header bg-success text-light"> Response </div>
+        <div class="card-body bg-dark">
+            <code class="text-light small">
+
+                {"1":<br>
+                    &nbsp;{"_links":<br>
+                        &nbsp;&nbsp;{"owner_url": /api/users/{{current_user.id}}/,<br>
+                &nbsp;&nbsp;"self": /api/cards/-your card reference see <a href="{{ url_for('cards_edit') }}" class="text-danger font-weight-bold text-decoration-none"> Cards Manager</a> -},<br>
+                    &nbsp;"created": Wed, 24 Jul 2019 01:48:49 GMT,<br>
+                    &nbsp;"dh11_values":7,<br>
+                    &nbsp;"gaz_values":0,<br>
+                    &nbsp;"name": arduino,<br>
+                    &nbsp;"owner": "{{ current_user.full_name() }}",<br>
+                    &nbsp;"owner_email": "{{ current_user.email }}",<br>
+
+            </code>
+    </div>
+    </div>
+    <p>
+</div>
+{% endblock %}
