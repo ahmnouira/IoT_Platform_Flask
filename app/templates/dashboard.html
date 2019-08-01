@@ -1,13 +1,31 @@
 {% extends 'base_dashboards.html'%}
 
+
+
+
 {% block content_dashboards %}
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+$(document).ready(function() {
+   var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+   socket.on('post_card', function(data) {
+      console.log("received data :" + data);
+       $strong.val($strong.val() + data);
+    })
+  });
+</script>
+
 <div class="container">
 
     <h1 class="text-center"> Hi <strong class="text-success"> {{ current_user.firstname }} {{ current_user.lastname }} </strong> Welcome to  ^^ My IoT Platform ^^ </h1>
         <hr>
 
 
-         <h3 class="text-center"> --> You have now <strong class="text-success"> {{ c }} </strong> cards registered in this platform <-- </h3><br>
+         <h3 class="text-center"> --> You have now <strong class="text-success" id="c"> {{ c }} </strong> cards registered in this platform <-- </h3><br>
     <section>
           <h4><span class="font-weight-bold text-danger"> Dashboard </span> this your profile page </h4>
           <h4> Go to <span class="font-weight-bold text-danger"> Cards Manager </span> to register a new card </h4>

@@ -173,7 +173,7 @@ def cards_edit():
             db.session.commit()
             return redirect(url_for('dashboard'))
    # cards = user.cards
-    return render_template('users_cards.html', title="users_cards", actives=actives, cards=cards, time=datetime.now().strftime('%Y-%m-%d,  %H:%M:%s'), form=form)
+    return render_template('users_cards.html', title="users_cards", actives=actives, cards=cards, time=datetime.now().strftime('%Y-%m-%d %H:%M:%S'), form=form)
 
 
 @App.route('/about_api')
@@ -210,6 +210,13 @@ def edit_profile():
         db.session.commit()
         return redirect(url_for('dashboard'))
     return render_template('edit_profile.html', title="Edit_profile", form=form)
+
+
+@App.route('/card_data/<card_id>', methods=['GET', 'POST'])
+@login_required
+def card_data(card_id):
+    c = Cards.query.get_or_404(card_id)
+    return render_template('card_data.html', title="card_data", card_id=card_id)
 
 
 @App.before_request

@@ -7,9 +7,11 @@ from app import App, db                   # import App object
 from flask_restful import Api, reqparse
 from app.models import User, Cards, Dht11
 from flask import abort, jsonify, url_for, request
+from flask_socketio import SocketIO, emit
+
 import json
 API = Api(App)
-
+sockectio = SocketIO(App)
 
 class UserAPI(Resource):               # Resource:  User
     parse = reqparse.RequestParser()
@@ -193,6 +195,8 @@ class CardsAPI(Resource):
                 # 'dht11_sensor': url_for('api.get_card_dht11', id=self.id)
             }
         }
+        sockectio.emit('post_card', data=User.query.filter_by(id=card.user_id).first().cards.count())
+
         return jsonify(response)
 
     def put(self, id):

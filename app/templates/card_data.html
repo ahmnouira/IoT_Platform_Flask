@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+  $(document).ready(function() {
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    console.log(socket)
+    var from_flask_card = '{{ card_id }}'      //  data from flask
+    console.log('form_flask : ' + from_flask_card)
+
+    socket.on('mqtt_message', function(data) {
+      console.log(data);
+      var text =  data['payload'];
+      var split_text = text.split(" ");
+      console.log(split_text);
+      var card_id = split_text[0];
+      var temp = split_text[1];
+      var humidity = split_text[2];
+      var gaz = split_text[3];
+
+  if(card_id == from_flask_card ) {
+
+      // temperature check
+      if (Number(temp)) {
+      $('#temperature').html("<p> Current Temp: <span class='text-success font-weight-bolder'>" +  temp +  "&#8451;</span></p>");
+      }
+
+      else {
+      $('#temperature').html("<p class='text-warning font-weight-bolder'> data is missing ! </p>");
+       }
+
+        // temperature check
+      if (Number(humidity) ) {
+      $('#humdi').html("<p> Current humidity: <span class='text-success font-weight-bolder'>" +  humidity + "&#37; </span></p>");
+      }
+
+      else {
+      $('#humdi').html("<p class='text-warning font-weight-bolder'> data is missing ! </p>");
+       }
+
+      if (Number(gaz) ) {
+      $('#gaz').html("<p> Current gaz: <span class='text-success font-weight-bolder'>" +  gaz + " </span></p>");
+      }
+
+      else {
+      $('#gaz').html("<p class='text-warning font-weight-bolder'> data is missing ! </p>");
+       }
+  }
+  else {
+         Swal.fire({
+            type: 'error',
+              title: 'Oops...',
+              text: "You can't send data here!",
+              footer: "<a href='/cards_edit/'>Check my cards references </a>"
+            })
+    }
+
+    })
+  });
+</script>
+
+<!-- Temperature -->
+<div class="container">
+  <div class="row w-75 p-3 mx-auto">
+<div class="col card" >
+  <img class="card-img-top" src="../static/temp.png" alt="Card image">
+  <div class="card-body">
+    <h4 class="card-title font-weight-bolder"> Temperature</h4>
+    <p class="card-text" id="temperature"> No data received Yet ! </p>
+    <a href="#" class="btn btn-danger"> See More Details </a>
+  </div>
+</div>
+
+    <!-- Humidity -->
+  <div class="col card">
+  <img class="card-img-top" src="../static/h_.png" alt="Card image" style="width:100%">
+  <div class="card-body">
+    <h4 class="card-title font-weight-bolder"> Humidity </h4>
+    <p class="card-text" id="humdi"> No data received Yet ! </p>
+    <a href="#" class="btn bg-primary text-white"> See More Details </a>
+  </div>
+</div>
+
+    <!-- Gaz -->
+    <div class="col card">
+  <img class="card-img-top" src="../static/gaz.png" alt="Card image" style="width:100%">
+  <div class="card-body">
+    <h4 class="card-title font-weight-bolder"> Gaz </h4>
+    <p class="card-text" id="gaz"> No data received Yet ! </p>
+    <a href="#" class="btn btn-danger text-white"> See More Details </a>
+  </div>
+</div>
+
+  </div>
+
+  <!-- Links backs -->
+   <div class="text-center mx-auto">
+    <a class="d-block large text-primary font-weight-bolder" href="{{ url_for('cards_edit') }} "> Back ?
+      <a class="d-block large text-primary font-weight-bolder" href=" {{ url_for('dashboard') }} "> Go to My Dashboard ?</a>
+    </a>
+  </div>
+</div>
+
+<footer class="page-footer font-small bluefixed-bottom">
+    <div class="container my-auto">
+<!-- Copyright -->
+      <br>
+  <div class="footer-copyright text-center py-3"> © 2019 Copyright:
+    <a href="https://github.com/AhmNouira/IoT_Platform_Flask" target="_blank" class="font-weight-bold"> IoT_Flask_Platform  </a>
+  </div>
+    </div>
+</footer>
+  <!-- Copyright -->
+
+{% endblock %}

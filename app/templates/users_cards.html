@@ -1,6 +1,5 @@
 
 
-
 {% extends 'base_dashboards.html'%}
 
 {% block content_dashboards %}
@@ -18,7 +17,7 @@
               <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>  Delete </th>
+                    <th> Delete </th>
                     <th> id </th>
                     <th> card_name </th>
                     <th> created </th>
@@ -40,7 +39,7 @@
                     </button></form></td>
 
                     <td>{{ c.id }}</td>
-                    <td>{{ c.name }}</td>
+                    <td><a class="text-danger" href="{{url_for('card_data', card_id=c.id) }} ">{{ c.name }}</a></td>
                     <td>{{ c.timestamp }} </td>
                     <td>{{ c.dht11_values.count() }}</td>
                     <td>{{ c.gaz_values.count() }}</td>
@@ -53,8 +52,8 @@
             </div>
           </div>
           <div class="card-footer small text-muted">
-            <div>Last Update at  {{ time }} </div>
-            <a class="d-block large text-success font-weight-bold  " href= "{{ url_for('create_card') }}"> Create a New Card ? </a></div>
+            <div>Last Update at <span class="font-weight-bold"> {{ time }}</span> </div>
+            <a class="d-block large text-success font-weight-bolder " href= "{{ url_for('create_card') }}"> Create a New Card ? </a></div>
         </div>
 
 
