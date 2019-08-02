@@ -2,6 +2,10 @@
 
 This is an IoT platform developped using flask where people can veiw the temperature, humidity and gaz state 
 
+## Video
+
+![iot_platform_flask](/images/video.mp4) { size=10}
+
 ## Overview
 
 Some photos about this project:
