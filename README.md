@@ -4,7 +4,7 @@ This is an IoT platform developped using flask where people can veiw the tempera
 
 ## Video
 
-![iot_platform_flask](/images/video.mp4) { size=10}
+[![iot_platform_flask](/images/dashboard.png)](/images/video.mp4) 
 
 ## Overview
 
