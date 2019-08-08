@@ -10,7 +10,7 @@ Some photos about this project:
 
 ![regsiter](/images/register.png)
 
-![card_edit](/images/card_edit.png)
+![cards_edit](/images/card_edit.png)
 
 ![card_data](/images/card_data.png)
 
